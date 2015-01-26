@@ -22,3 +22,33 @@ var compress = function(inputList) {
 var test0 = compress(['a', 'a', 'a', 'a', 'b', 'c', 'c', 'a', 'a', 'd', 'e', 'e', 'e', 'e']);
 // NODE> test0
 // [ 'a', 'b', 'c', 'a', 'd', 'e' ]
+
+// P09 (**) Pack consecutive duplicates of list elements into sublists.
+//     If a list contains repeated elements they should be placed in separate sublists.
+
+//     Example:
+//     * (pack '(a a a a b c c a a d e e e e))
+//     ((A A A A) (B) (C C) (A A) (D) (E E E E))
+
+var pack = function(inputList) {
+    return _.reduce(inputList, function(accSubLists, elem) {
+        var subList = _.last(accSubLists);
+        if(_.last(subList) === elem) {// group
+            subList.push(elem);
+            accSubLists.pop();// need to remove the last element
+            accSubLists.push(subList);// to update with the new one
+            return accSubLists;
+        }
+        accSubLists.push([elem]);
+        return accSubLists;
+    }, []);
+};
+
+var test1 = pack(['a', 'a', 'a', 'a', 'b', 'c', 'c', 'a', 'a', 'd', 'e', 'e', 'e', 'e']);
+// NODE> test1
+// [ [ 'a', 'a', 'a', 'a' ],
+//   [ 'b' ],
+//   [ 'c', 'c' ],
+//   [ 'a', 'a' ],
+//   [ 'd' ],
+//   [ 'e', 'e', 'e', 'e' ] ]
