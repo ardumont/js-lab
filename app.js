@@ -85,3 +85,35 @@ var test2 = encode(['a', 'a', 'a', 'a', 'b', 'c', 'c', 'a', 'a', 'd', 'e', 'e', 
 //   [ 2, 'a' ],
 //   [ 1, 'd' ],
 //   [ 4, 'e' ] ]
+
+// P11 (*) Modified run-length encoding.
+// Modify the result of problem P10 in such a way that if an element has no duplicates it is simply copied into the result list. Only elements with duplicates are transferred as (N E) lists.
+// Example:
+//  * (encode-modified '(a a a a b c c a a d e e e e))
+//     ((4 A) B (2 C) (2 A) D (4 E))
+
+// P12 (**) Decode a run-length encoded list.
+// Given a run-length code list generated as specified in problem P11. Construct its uncompressed version.
+
+/**
+ * Like map but flatten one dimension as the expected return of fn is a list of data.
+ * @param list The list we need to transform by feeding each element to fn
+ * @param fn   The function to execute on an element of the list. The contract of fn is that it must return the result wrapped in a list.
+ * @return transformed list
+ */
+var mapcat = function(list, fn) {
+    return _.flatten(_.map(list, fn), true);
+};
+
+var testMapcat = mapcat([1,23,3], function(e) { return [e+1]; });
+// NODE> testMapcat
+// [ 2, 24, 4 ]
+
+var symbol = function(frequency, elem) {
+    if(frequency <= 0) return [];
+    return _.times(frequency, function(e) { return elem; });
+};
+
+var test3 = symbol(10, 'a');
+// NODE> test3
+// [ 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a' ]
