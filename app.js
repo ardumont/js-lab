@@ -60,10 +60,23 @@ var test1 = pack(['a', 'a', 'a', 'a', 'b', 'c', 'c', 'a', 'a', 'd', 'e', 'e', 'e
 //     * (encode '(a a a a b c c a a d e e e e))
 //     ((4 A) (1 B) (2 C) (2 A) (1 D) (4 E))
 
-var encode = function(inputList) {
-    return _.map(pack(inputList), function(l) {
+var frequencies = function(inputList) {
+    return _.map(inputList, function(l) {
         return [_.size(l), _.first(l)];
     });
+};
+
+var test11 = frequencies([ [ 'a', 'a', 'a', 'a' ],[ 'b' ],[ 'c', 'c' ],[ 'a', 'a' ],[ 'd' ],[ 'e', 'e', 'e', 'e' ] ]);
+// NODE> test11
+// [ [ 4, 'a' ],
+//   [ 1, 'b' ],
+//   [ 2, 'c' ],
+//   [ 2, 'a' ],
+//   [ 1, 'd' ],
+//   [ 4, 'e' ] ]
+
+var encode = function(inputList) {
+    return _.compose(frequencies, pack)(inputList);
 };
 
 var test2 = encode(['a', 'a', 'a', 'a', 'b', 'c', 'c', 'a', 'a', 'd', 'e', 'e', 'e', 'e']);
