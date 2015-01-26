@@ -61,20 +61,9 @@ var test1 = pack(['a', 'a', 'a', 'a', 'b', 'c', 'c', 'a', 'a', 'd', 'e', 'e', 'e
 //     ((4 A) (1 B) (2 C) (2 A) (1 D) (4 E))
 
 var encode = function(inputList) {
-    return _.reduce(inputList, function(acc, elem) {
-        var frequencyMap = _.last(acc);
-        var counter = _.first(frequencyMap);
-        var value = _.last(frequencyMap);
-
-        if(value === elem) {
-            var newElem = [counter+1, elem];
-            acc.pop();// need to remove the last element
-            acc.push(newElem);// to update with the new one
-            return acc;
-        }
-        acc.push([1, elem]);
-        return acc;
-    }, []);
+    return _.map(pack(inputList), function(l) {
+        return [_.size(l), _.first(l)];
+    });
 };
 
 var test2 = encode(['a', 'a', 'a', 'a', 'b', 'c', 'c', 'a', 'a', 'd', 'e', 'e', 'e', 'e']);
