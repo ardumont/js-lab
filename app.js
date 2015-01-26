@@ -1,4 +1,4 @@
-var _ = require('./node_modules/underscore/underscore-min.js');
+var _ = require('./node_modules/underscore-contrib/index.js');
 
 //exercises from: http://www.ic.unicamp.br/~meidanis/courses/mc336/2006s2/funcional/L-99_Ninety-Nine_Lisp_Problems.html
 
@@ -113,26 +113,13 @@ var test22 = encodePrime(['a', 'a', 'a', 'a', 'b', 'c', 'c', 'a', 'a', 'd', 'e',
 // P12 (**) Decode a run-length encoded list.
 // Given a run-length code list generated as specified in problem P11. Construct its uncompressed version.
 
-// extend _ with mapcat definition (or we can add the http://documentcloud.github.io/underscore-contrib dependency)
-_.mixin({
-    /**
-     * Like map but flatten one dimension as the expected return of fn is a list of data.
-     * @param list The list we need to transform by feeding each element to fn
-     * @param fn   The function to execute on an element of the list. The contract of fn is that it must return the result wrapped in a list.
-     * @return transformed list
-     */
-    mapcat: function(list, fn) {
-        return _.flatten(_.map(list, fn), true);
-    }
-});
-
 var testMapcat = _.mapcat([1, 23, 3], function(e) { return [e+1]; });
 // NODE> testMapcat
 // [ 2, 24, 4 ]
 
 var symbol = function(pair) {
     var frequency = _.first(pair);
-    var elem = _.last(pair);
+    var elem = _.second(pair);
     if(frequency <= 0) return [];
     return _.times(frequency, _.constant(elem));
 };

@@ -6,7 +6,8 @@
         "swank": "node node_modules/swank-js"
     },
     "dependencies": {
-        "underscore": "1.7.0"
+        "underscore": "1.7.0",
+        "underscore-contrib": "0.3.0"
     },
     "devDependencies": {
         "swank-js": "0.0.5"
