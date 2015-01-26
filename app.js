@@ -86,6 +86,30 @@ var test2 = encode(['a', 'a', 'a', 'a', 'b', 'c', 'c', 'a', 'a', 'd', 'e', 'e', 
 //   [ 1, 'd' ],
 //   [ 4, 'e' ] ]
 
+// P11 (*) Modified run-length encoding.
+// Modify the result of problem P10 in such a way that if an element has no duplicates it is simply copied into the result list. Only elements with duplicates are transferred as (N E) lists.
+// Example:
+//  * (encode-modified '(a a a a b c c a a d e e e e))
+//     ((4 A) B (2 C) (2 A) D (4 E))
+
+var frequenciesPrime = function(inputList) {
+    return _.map(inputList, function(l) {
+        var s = _.size(l);
+        var e = _.first(l);
+        return (s === 1) ? e : [s, e];
+    });
+};
+
+var test111 = frequenciesPrime([ [ 'a', 'a', 'a', 'a' ],[ 'b' ],[ 'c', 'c' ],[ 'a', 'a' ],[ 'd' ],[ 'e', 'e', 'e', 'e' ] ]);
+// NODE> test111
+// [ [ 4, 'a' ], 'b', [ 2, 'c' ], [ 2, 'a' ], 'd', [ 4, 'e' ] ]
+
+var encodePrime = _.compose(frequenciesPrime, pack);
+
+var test22 = encodePrime(['a', 'a', 'a', 'a', 'b', 'c', 'c', 'a', 'a', 'd', 'e', 'e', 'e', 'e']);
+// NODE> test22
+// [ [ 4, 'a' ], 'b', [ 2, 'c' ], [ 2, 'a' ], 'd', [ 4, 'e' ] ]
+
 // P12 (**) Decode a run-length encoded list.
 // Given a run-length code list generated as specified in problem P11. Construct its uncompressed version.
 
@@ -124,9 +148,3 @@ var decode = function(encodedList) {
 var test33 = decode([[10, 'a'], [3, 1]]);
 // NODE> test33
 // [ 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 1, 1, 1 ]
-
-// P11 (*) Modified run-length encoding.
-// Modify the result of problem P10 in such a way that if an element has no duplicates it is simply copied into the result list. Only elements with duplicates are transferred as (N E) lists.
-// Example:
-//  * (encode-modified '(a a a a b c c a a d e e e e))
-//     ((4 A) B (2 C) (2 A) D (4 E))
