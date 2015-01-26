@@ -1,0 +1,2 @@
+swank:
+	npm run swank

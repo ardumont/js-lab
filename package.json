@@ -3,7 +3,7 @@
     "version": "0.0.1",
     "main": "app.js",
     "scripts": {
-        "start": "node app.js"
+        "swank": "node node_modules/swank-js"
     },
     "dependencies": {
         "underscore": "1.7.0"
