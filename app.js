@@ -95,17 +95,20 @@ var test2 = encode(['a', 'a', 'a', 'a', 'b', 'c', 'c', 'a', 'a', 'd', 'e', 'e', 
 // P12 (**) Decode a run-length encoded list.
 // Given a run-length code list generated as specified in problem P11. Construct its uncompressed version.
 
-/**
- * Like map but flatten one dimension as the expected return of fn is a list of data.
- * @param list The list we need to transform by feeding each element to fn
- * @param fn   The function to execute on an element of the list. The contract of fn is that it must return the result wrapped in a list.
- * @return transformed list
- */
-var mapcat = function(list, fn) {
-    return _.flatten(_.map(list, fn), true);
-};
+// extend _ with mapcat definition (or we can add the http://documentcloud.github.io/underscore-contrib dependency)
+_.mixin({
+    /**
+     * Like map but flatten one dimension as the expected return of fn is a list of data.
+     * @param list The list we need to transform by feeding each element to fn
+     * @param fn   The function to execute on an element of the list. The contract of fn is that it must return the result wrapped in a list.
+     * @return transformed list
+     */
+    mapcat: function(list, fn) {
+        return _.flatten(_.map(list, fn), true);
+    }
+});
 
-var testMapcat = mapcat([1,23,3], function(e) { return [e+1]; });
+var testMapcat = _.mapcat([1,23,3], function(e) { return [e+1]; });
 // NODE> testMapcat
 // [ 2, 24, 4 ]
 
