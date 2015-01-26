@@ -111,9 +111,9 @@ var testMapcat = mapcat([1,23,3], function(e) { return [e+1]; });
 
 var symbol = function(frequency, elem) {
     if(frequency <= 0) return [];
-    return _.times(frequency, function(e) { return elem; });
+    return _.times(frequency, _.constant(elem));
 };
 
-var test3 = symbol(10, 'a');
+var test3 = symbol(10, 'b');
 // NODE> test3
 // [ 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a' ]
