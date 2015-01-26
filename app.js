@@ -75,9 +75,7 @@ var test11 = frequencies([ [ 'a', 'a', 'a', 'a' ],[ 'b' ],[ 'c', 'c' ],[ 'a', 'a
 //   [ 1, 'd' ],
 //   [ 4, 'e' ] ]
 
-var encode = function(inputList) {
-    return _.compose(frequencies, pack)(inputList);
-};
+var encode = _.compose(frequencies, pack);
 
 var test2 = encode(['a', 'a', 'a', 'a', 'b', 'c', 'c', 'a', 'a', 'd', 'e', 'e', 'e', 'e']);
 // NODE> test2
