@@ -86,12 +86,6 @@ var test2 = encode(['a', 'a', 'a', 'a', 'b', 'c', 'c', 'a', 'a', 'd', 'e', 'e', 
 //   [ 1, 'd' ],
 //   [ 4, 'e' ] ]
 
-// P11 (*) Modified run-length encoding.
-// Modify the result of problem P10 in such a way that if an element has no duplicates it is simply copied into the result list. Only elements with duplicates are transferred as (N E) lists.
-// Example:
-//  * (encode-modified '(a a a a b c c a a d e e e e))
-//     ((4 A) B (2 C) (2 A) D (4 E))
-
 // P12 (**) Decode a run-length encoded list.
 // Given a run-length code list generated as specified in problem P11. Construct its uncompressed version.
 
@@ -108,15 +102,31 @@ _.mixin({
     }
 });
 
-var testMapcat = _.mapcat([1,23,3], function(e) { return [e+1]; });
+var testMapcat = _.mapcat([1, 23, 3], function(e) { return [e+1]; });
 // NODE> testMapcat
 // [ 2, 24, 4 ]
 
-var symbol = function(frequency, elem) {
+var symbol = function(pair) {
+    var frequency = _.first(pair);
+    var elem = _.last(pair);
     if(frequency <= 0) return [];
     return _.times(frequency, _.constant(elem));
 };
 
-var test3 = symbol(10, 'b');
+var test3 = symbol([10, 'b']);
 // NODE> test3
 // [ 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a' ]
+
+var decode = function(encodedList) {
+    return _(encodedList).mapcat(symbol);
+};
+
+var test33 = decode([[10, 'a'], [3, 1]]);
+// NODE> test33
+// [ 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 1, 1, 1 ]
+
+// P11 (*) Modified run-length encoding.
+// Modify the result of problem P10 in such a way that if an element has no duplicates it is simply copied into the result list. Only elements with duplicates are transferred as (N E) lists.
+// Example:
+//  * (encode-modified '(a a a a b c c a a d e e e e))
+//     ((4 A) B (2 C) (2 A) D (4 E))
