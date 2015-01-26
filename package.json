@@ -1,0 +1,14 @@
+{
+    "name": "js-lab",
+    "version": "0.0.1",
+    "main": "app.js",
+    "scripts": {
+        "start": "node app.js"
+    },
+    "dependencies": {
+        "underscore": "1.7.0"
+    },
+    "devDependencies": {
+        "swank-js": "0.0.5"
+    }
+}
