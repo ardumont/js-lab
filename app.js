@@ -135,3 +135,66 @@ var decode = function(encodedList) {
 var test33 = decode([[10, 'a'], [3, 1]]);
 // NODE> test33
 // [ 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 1, 1, 1 ]
+
+////////////////////////////////// coding dojo prepared with ggirou on js-fiddle - http://jsfiddle.net/ggirou/mem0ccb3/
+
+// 1. Afficher le nombre de tweets
+var tweets = require('./data/tweets.js');
+
+// 1.
+_.size(tweets);
+
+// 2.
+var texts = _.map(tweets, function(t) {return t.text; });
+
+//var texts = _.map(tweets, _.property('text'));
+
+//var texts = _.pluck(tweets, 'text');
+
+// 3.
+_.first(texts);
+
+// 4.
+_.first(texts, 10);
+
+// 5.
+_.last(texts, 10);
+
+// 6.
+_.drop(texts, 10);
+
+// 7.
+_.initial(texts, 10);
+
+// 8.
+var simpleTweets = _.map(tweets, function(t) { return _.pick(t, 'created_at', 'lang', 'text', 'source'); });
+
+//var simpleTweets = _.map(tweets, _.partial(_.pick, _, 'created_at', 'lang', 'text', 'source'));
+
+// 9.
+_(simpleTweets).where({"source": "web", "lang": "en"});
+
+// 10.
+_.filter(simpleTweets, function(t) { return _.contains(["web", "TweetDeck"], t.source); });
+
+_.filter(simpleTweets, _.compose(
+    _.partial(_.contains, ["web", "TweetDeck"], _),
+    _.property('source')
+));
+
+// 11.
+var usernames = _.map(tweets, function(t) { return t.user.screen_name; });
+
+//var usernames = _(tweets).pluck('user').pluck('screen_name').value();
+
+//var usernames = _.map(tweets, _.compose(_.property('screen_name'), _.property('user')));
+
+// 12.
+_.uniq(usernames);
+
+// 13.
+// En underscore
+var tweetsPerUser = _.reduce(tweets, function(resultMap, t){
+    (resultMap[t.user.screen_name] = resultMap[t.user.screen_name] || []).push(t.text);
+    return resultMap;
+}, {});
